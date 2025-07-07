@@ -4,17 +4,19 @@ import scala.io.StdIn.readLine
 
 object InputHandler {
   def getUserInput(): String = {
-    print("\nChoose an option by typing the number and pressing enter \n1: English → Morse\n2: Morse → English\n3: Exit: ")
+    println("\nEnter either Morse or English text to translate (or type 'exit' to quit)\n❗ Make sure to separate morse letters with a space and words with a slash '/'")
     readLine().trim.toLowerCase
   }
-
-  def getEnglishInput(): String ={
-    print("\t\uD83D\uDD24 Enter English Text: ")
-    readLine().trim
-  }
-
-  def getMorseInput(): String = {
-    print("\uD83D\uDCE1 Enter Morse Text (separate letters with a space ' ' and words with a slash '/' : ")
-    readLine().trim
+  
+  def inputDetector(input: String): Either[String,String] = {
+    val morseInput = Set('.', '-', ' ', '/')
+    if(input.trim.isEmpty) {
+      Left("⚠️ Please enter English or Morse to translate")
+    } else if (input.forall(morseInput.contains)) {
+      Right("morse")
+    }  else {
+      Right("english")
+    }
+    //.forall(...) is a method on sequences (and strings, since they’re sequences of chars) that checks if all elements satisfy a given condition.
   }
 }

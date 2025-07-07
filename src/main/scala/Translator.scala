@@ -36,7 +36,7 @@ object Translator {
       val charsOrErrors: Seq[Either[String, Char]] = chars.map { morseChar =>
           reversedMap.get(morseChar) match {
             case Some(c) => Right(c)
-            case None => Left(s"Invalid Morse Code: '$morseChar''")
+            case None => Left(s"Invalid Morse Code: '$morseChar'")
           }
       }
       sequenceEither(charsOrErrors)
