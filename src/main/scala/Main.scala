@@ -9,18 +9,23 @@ object Main extends App {
     val input = InputHandler.getUserInput()
     val inputType = InputHandler.inputDetector(input)
     
-    if(input.toLowerCase == "exit") {
-      println("Goodbye \uD83D\uDC4B")
-      running = false
-    } else if (input.isEmpty) {
-      println("⚠️ Please enter English or Morse to translate")
-    } else if (inputType == Right("english")) {
-      OutputHandler.printResult(Translator.englishToMorse(input))
-    } else if(inputType == Right("morse")) {
-      OutputHandler.printResult(Translator.morseToEnglish(input))
-    } else {
-      println("⚠️ Unknown choice. Please try again.")
-    }
-    
+    InputHandler.inputDetector(input) match {
+      case Right("exit") =>
+        println("Goodbye \uD83D\uDC4B")
+        running = false
+
+      case Right("morse") =>
+        OutputHandler.printResult(Translator.morseToEnglish(input))
+
+      case Right("english") =>
+        OutputHandler.printResult(Translator.englishToMorse(input))
+
+      case Left(error) =>
+        println(error)
+      
+      case(other) =>
+        println(s"Error: unexpected case $other ")
+
+    }    
   }
 }

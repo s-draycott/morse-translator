@@ -10,12 +10,11 @@ object InputHandler {
   
   def inputDetector(input: String): Either[String,String] = {
     val morseInput = Set('.', '-', ' ', '/')
-    if(input.trim.isEmpty) {
-      Left("⚠️ Please enter English or Morse to translate")
-    } else if (input.forall(morseInput.contains)) {
-      Right("morse")
-    }  else {
-      Right("english")
+    input.trim.toLowerCase match {
+      case "" => Left("⚠️ Please enter English or Morse to translate")
+      case "exit" => Right("exit")
+      case s if s.forall(morseInput.contains) => Right("morse")
+      case _ => Right("english")
     }
     //.forall(...) is a method on sequences (and strings, since they’re sequences of chars) that checks if all elements satisfy a given condition.
   }

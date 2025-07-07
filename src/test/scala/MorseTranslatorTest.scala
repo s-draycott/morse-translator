@@ -38,4 +38,9 @@ class MorseTranslatorTest extends AnyFunSuite {
     val result = Translator.morseToEnglish(".- --- ... --..--")
     assert(result == Left("Invalid Morse Code: '--..--'"))
   }
+  
+  test("Exit command detected correctlt") {
+    val result = InputHandler.inputDetector("exit")
+    assert(result == Right("exit"))
+  }
 }
