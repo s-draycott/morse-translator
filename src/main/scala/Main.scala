@@ -3,15 +3,26 @@ package com.sdraycott.morsetranslator
 import jdk.nashorn.internal.ir.TryNode
 
 object Main extends App {
-  val input = "Sally"
-  Translator.englishToMorse(input) match {
-    case Right(morse) => println(s"Morse: $morse")
-    case Left(error) => println(s"Error: $error")
-  }
+  OutputHandler.welcome()
+  var running = true
+  while(running) {
+    InputHandler.getUserInput() match {
+      case "1" =>
+        val english = InputHandler.getEnglishInput()
+        val morseResult = Translator.englishToMorse(english)
+        OutputHandler.printResult(morseResult)
 
-  val input2 = ".... . .-.. .-.. --- / ... .- .-.. .-.. -.--"
-  Translator.morseToEnglish(input2) match {
-    case Right(english) => println(s"Translation: $english")
-    case Left(error) => println(s"Error: $error")
+      case "2" =>
+        val morse = InputHandler.getMorseInput()
+        val englishResult = Translator.morseToEnglish(morse)
+        OutputHandler.printResult(englishResult)
+
+      case "3" =>
+        println("\uD83D\uDC4B Goodbye!")
+        running = false
+
+      case other =>
+        println(s"⚠️ Unknown choice '$other'. Please try again.")
+    }
   }
 }
